@@ -1,0 +1,28 @@
+{
+	"name": "WhenAFileArrive",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Reference Wrangling",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"FileName": "@trigger().outputs.body.fileName"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/adf-demo/blobs/ReferenceDemo/0Data",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/5eed10dc-e0d7-42c5-961e-1ccd3b6dd500/resourceGroups/CanadaStorage/providers/Microsoft.Storage/storageAccounts/franmerstorecanada",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

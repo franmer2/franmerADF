@@ -1,0 +1,23 @@
+{
+	"name": "SQLDatabasePourSFTP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure SQL Database",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SFTP"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@concat('aMyTable')",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

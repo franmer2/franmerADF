@@ -1,0 +1,41 @@
+{
+	"name": "BlobCanada_3parameters",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Blob Canada",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Prefix": {
+				"type": "string"
+			},
+			"Date": {
+				"type": "string"
+			},
+			"Name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Stored Procedure"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat(dataset().Prefix,'-',dataset().Date,'-',dataset().Name,'.csv')",
+					"type": "Expression"
+				},
+				"folderPath": "results",
+				"container": "adftests"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

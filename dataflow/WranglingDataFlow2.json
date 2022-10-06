@@ -1,0 +1,22 @@
+{
+	"name": "WranglingDataFlow2",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"folder": {
+			"name": "Demo/Reference Demo"
+		},
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "Data",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  Data",
+					"dataset": {
+						"referenceName": "Data",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared Data = let\r\n  AdfDoc = AzureStorage.BlobContents(\"https://franmerstorecanada.blob.core.windows.net/adf-demo/ReferenceDemo/0Data/DS20200720200710000000.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \";\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = Data,\r\n  #\"Changed column type\" = Table.TransformColumnTypes(Source, {{\"Nombre\", type number}}),\r\n  #\"Replaced value\" = Table.ReplaceValue(#\"Changed column type\", \" \", \"\", Replacer.ReplaceText, {\"Montant\"}),\r\n  #\"Changed column type 1\" = Table.TransformColumnTypes(#\"Replaced value\", {{\"Montant\", type number}})\r\nin\r\n  #\"Changed column type 1\";\r\n"
+		}
+	}
+}

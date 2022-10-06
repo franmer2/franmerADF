@@ -1,0 +1,26 @@
+{
+	"name": "Cond_PBI_Refresh_Trigger",
+	"properties": {
+		"description": "Trigger pipeline when a pile arrive in any folder",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Cond_PBI_Refresh",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/adf-pbi-cond-refresh/blobs/DS",
+			"blobPathEndsWith": "csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/5eed10dc-e0d7-42c5-961e-1ccd3b6dd500/resourceGroups/CanadaStorage/providers/Microsoft.Storage/storageAccounts/franmerstorecanada",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

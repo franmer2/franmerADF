@@ -1,0 +1,22 @@
+{
+	"name": "BinaryRailFile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Blob Canada",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Demo/TC"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "railfile.json",
+				"container": "adftests"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,23 @@
+{
+	"name": "ParquetDWDemo",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageCanadaCentral",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWMigration/Target"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "demofiles"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

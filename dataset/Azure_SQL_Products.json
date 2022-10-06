@@ -1,0 +1,34 @@
+{
+	"name": "Azure_SQL_Products",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure SQL Database",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Demo/ProductsDemo"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ProductID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductName",
+				"type": "nchar"
+			},
+			{
+				"name": "Image",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Products"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

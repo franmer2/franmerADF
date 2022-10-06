@@ -1,0 +1,24 @@
+{
+	"name": "SaveFRomLVDW_NorthEruope",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FranmerStorage_NorthEurope",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWMigration/Target"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Clients/FY16/LV/SaveFromDW",
+				"container": "save-franmer"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

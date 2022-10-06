@@ -1,0 +1,41 @@
+{
+	"name": "Azure_SQL_SalesTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure SQL Database",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Demo/ProductsDemo"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SalesID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ProductID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CountryID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Nb_Sales",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Objectif",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ADFSales"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,14 @@
+{
+	"name": "AzureDataLakeStorage",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [
+			"The vault Gen2"
+		],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://thevaultgen2.dfs.core.windows.net"
+		},
+		"description": "The vault Gen 2"
+	}
+}

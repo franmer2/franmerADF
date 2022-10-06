@@ -1,0 +1,51 @@
+{
+	"name": "AzureSql_Sales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure SQL Database Canada",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Purview/Azure SQL DB/Source"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SalesID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CountryID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Nb_Sales",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Objectif",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CustomerID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Purview_SalesWithCustomerID"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

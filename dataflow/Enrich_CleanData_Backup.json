@@ -1,0 +1,55 @@
+{
+	"name": "Enrich_CleanData_Backup",
+	"properties": {
+		"description": "Enrich clean data with reference",
+		"folder": {
+			"name": "Demo/Reference Demo"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "02_CleanData",
+						"type": "DatasetReference"
+					},
+					"name": "Data"
+				},
+				{
+					"dataset": {
+						"referenceName": "00_Reference",
+						"type": "DatasetReference"
+					},
+					"name": "Reference"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "03_MergedANDFinalData",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Lookup"
+				},
+				{
+					"name": "ConditionalSplit1"
+				},
+				{
+					"name": "SelectMontant"
+				},
+				{
+					"name": "SelectNombre"
+				},
+				{
+					"name": "Union"
+				}
+			],
+			"script": "source(output(\n\t\t{Soci�t�} as short,\n\t\t{Domaine personnel} as string,\n\t\t{Sous-domaine pers.} as string,\n\t\t{Centre de co�t} as integer,\n\t\tMatricule as integer,\n\t\t{Nom Pr�nom} as string,\n\t\tRubrique as string,\n\t\tNombre as double,\n\t\tMontant as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tignoreNoFilesFound: false) ~> Data\nsource(output(\n\t\tRUBRIQUE as string,\n\t\t{LIBELLE SAP} as string,\n\t\tDATA as string,\n\t\t{ZONE A/N} as string,\n\t\tEXTRACT as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Reference\nData, Reference lookup(Data@Rubrique == Reference@RUBRIQUE,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> Lookup\nLookup split(Nombre==0,\n\tdisjoint: false) ~> ConditionalSplit1@(Montant, Nombre)\nConditionalSplit1@Montant select(mapColumn(\n\t\t{Société} = {Soci�t�},\n\t\t{Domaine personnel},\n\t\t{Sous-domaine personnel} = {Sous-domaine pers.},\n\t\t{Centre de coût} = {Centre de co�t},\n\t\tMatricule,\n\t\t{Nom Prénom} = {Nom Pr�nom},\n\t\tRubrique = ConditionalSplit1@Montant@Rubrique,\n\t\tValue = Montant,\n\t\tRUBRIQUE = ConditionalSplit1@Montant@RUBRIQUE,\n\t\t{LIBELLE SAP},\n\t\tDATA,\n\t\t{ZONE A/N},\n\t\tEXTRACT\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectMontant\nConditionalSplit1@Nombre select(mapColumn(\n\t\t{Société} = {Soci�t�},\n\t\t{Domaine personnel},\n\t\t{Sous-domaine personnel} = {Sous-domaine pers.},\n\t\t{Centre de coût} = {Centre de co�t},\n\t\tMatricule,\n\t\t{Nom Prénom} = {Nom Pr�nom},\n\t\tRubrique = ConditionalSplit1@Nombre@Rubrique,\n\t\tValue = Nombre,\n\t\tRUBRIQUE = ConditionalSplit1@Nombre@RUBRIQUE,\n\t\t{LIBELLE SAP},\n\t\tDATA,\n\t\t{ZONE A/N},\n\t\tEXTRACT\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> SelectNombre\nSelectMontant, SelectNombre union(byName: true)~> Union\nUnion sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\ttruncate: true,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink"
+		}
+	}
+}

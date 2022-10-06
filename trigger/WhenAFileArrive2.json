@@ -1,0 +1,28 @@
+{
+	"name": "WhenAFileArrive2",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Stored Procedure trigger File Share_copy1",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"FileName": "@trigger().outputs.body.fileName"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/adftests/blobs/files",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/5eed10dc-e0d7-42c5-961e-1ccd3b6dd500/resourceGroups/CanadaStorage/providers/Microsoft.Storage/storageAccounts/franmercanadacentral",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"name": "NewTenantDemoFiles_LV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "NewTenantCanadaGlobalStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWMigration/Target"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "DemoDW",
+				"fileSystem": "demofiles"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

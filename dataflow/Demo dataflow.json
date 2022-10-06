@@ -1,0 +1,55 @@
+{
+	"name": "Demo dataflow",
+	"properties": {
+		"folder": {
+			"name": "Demo/Products Demo"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Azure_SQL_SalesTable",
+						"type": "DatasetReference"
+					},
+					"name": "Sales"
+				},
+				{
+					"dataset": {
+						"referenceName": "Azure_SQL_Country",
+						"type": "DatasetReference"
+					},
+					"name": "Country"
+				},
+				{
+					"dataset": {
+						"referenceName": "Azure_SQL_Products",
+						"type": "DatasetReference"
+					},
+					"name": "Products"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Azure_SQL_Staging",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "SalesCountry"
+				},
+				{
+					"name": "SalesCountryProducts"
+				},
+				{
+					"name": "RemovingDuplicatedColumns"
+				}
+			],
+			"script": "source(output(\n\t\tSalesID as string,\n\t\tProductID as string,\n\t\tCountryID as string,\n\t\tNb_Sales as string,\n\t\tObjectif as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tlimit: 100,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Sales\nsource(output(\n\t\tCountryID as integer,\n\t\tCountryName as string,\n\t\tFlag as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Country\nsource(output(\n\t\tProductID as integer,\n\t\tProductName as string,\n\t\tImage as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Products\nSales, Country join(toInteger(Sales@CountryID) == Country@CountryID,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> SalesCountry\nSalesCountry, Products join(toInteger(Sales@ProductID) == Products@ProductID,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> SalesCountryProducts\nSalesCountryProducts select(mapColumn(\n\t\tSalesID,\n\t\tNb_Sales,\n\t\tObjectif,\n\t\tCountryID = Country@CountryID,\n\t\tCountryName,\n\t\tFlag,\n\t\tProductID = Products@ProductID,\n\t\tProductName,\n\t\tImage\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RemovingDuplicatedColumns\nRemovingDuplicatedColumns sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+		}
+	}
+}

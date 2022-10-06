@@ -1,0 +1,74 @@
+{
+	"name": "Data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure Storage",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DSFileName": {
+				"type": "string",
+				"defaultValue": "DS20200720200710000000.csv"
+			}
+		},
+		"folder": {
+			"name": "Demo/Reference Demo/1_Data In"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().DSFileName",
+					"type": "Expression"
+				},
+				"folderPath": "ReferenceDemo/0Data",
+				"container": "adf-demo"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Soci�t�",
+				"type": "String"
+			},
+			{
+				"name": "Domaine personnel",
+				"type": "String"
+			},
+			{
+				"name": "Sous-domaine pers.",
+				"type": "String"
+			},
+			{
+				"name": "Centre de co�t",
+				"type": "String"
+			},
+			{
+				"name": "Matricule",
+				"type": "String"
+			},
+			{
+				"name": "Nom Pr�nom",
+				"type": "String"
+			},
+			{
+				"name": "Rubrique",
+				"type": "String"
+			},
+			{
+				"name": "Nombre",
+				"type": "String"
+			},
+			{
+				"name": "Montant",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

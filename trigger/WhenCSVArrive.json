@@ -1,0 +1,29 @@
+{
+	"name": "WhenCSVArrive",
+	"properties": {
+		"description": "Trigger for file format validation",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Compare Format",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"FileName": "@trigger().outputs.body.fileName"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/csv/blobs/Test",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/5eed10dc-e0d7-42c5-961e-1ccd3b6dd500/resourceGroups/CanadaStorage/providers/Microsoft.Storage/storageAccounts/franmerstorecanada",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

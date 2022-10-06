@@ -1,0 +1,34 @@
+{
+	"name": "AzureSqlTable_DS3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure SQL Database Canada",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Demo/PBIConditionalRefresh/Target"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SourceName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Value",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Date",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "AC_DS3"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

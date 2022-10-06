@@ -1,0 +1,158 @@
+{
+	"name": "Stored Procedure trigger File Share_copy1",
+	"properties": {
+		"description": "Copy files to FileShare ",
+		"activities": [
+			{
+				"name": "Copy data",
+				"description": "Copy data by using Azure SQL Database Stored Procedure",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "MyDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[Franmer]",
+						"storedProcedureParameters": {
+							"MyFileName": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.FileName",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureFileStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSQLCanada",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DelimitedTextToFileShare_parameters",
+						"type": "DatasetReference",
+						"parameters": {
+							"Prefix": {
+								"value": "@pipeline().parameters.FileName",
+								"type": "Expression"
+							},
+							"Date": {
+								"value": "@variables('Date')",
+								"type": "Expression"
+							},
+							"Name": {
+								"value": "MonParametre",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Delete",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Copy data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "BlobCanadaFileParam",
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": {
+								"value": "@pipeline().parameters.FileName",
+								"type": "Expression"
+							}
+						}
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true
+					}
+				}
+			},
+			{
+				"name": "MyDate",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Date",
+					"value": {
+						"value": "@formatDateTime(utcnow(),'yyyy-MM-ddTHH-mm-ss')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"Date": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Stored Procedure"
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-24T18:38:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,31 @@
+{
+	"name": "02_CleanData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure Storage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Demo/Reference Demo/2_Data Clean"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "ReferenceDemo/CleanData",
+				"container": "adf-demo"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

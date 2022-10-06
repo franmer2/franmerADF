@@ -1,0 +1,16 @@
+{
+	"name": "AzureSQLCanada",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure SQL Database Canada",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Stored Procedure"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

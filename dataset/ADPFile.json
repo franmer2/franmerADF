@@ -1,0 +1,145 @@
+{
+	"name": "ADPFile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Blob Canada",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Demo/Power Query Demo"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "20220407175409ABN_ADP.csv",
+				"folderPath": "CSV",
+				"container": "demofiles"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Company",
+				"type": "String"
+			},
+			{
+				"name": "Supplier Number",
+				"type": "String"
+			},
+			{
+				"name": "Invoice Date",
+				"type": "String"
+			},
+			{
+				"name": "Invoice #",
+				"type": "String"
+			},
+			{
+				"name": "Amount",
+				"type": "String"
+			},
+			{
+				"name": "Currency",
+				"type": "String"
+			},
+			{
+				"name": "Status",
+				"type": "String"
+			},
+			{
+				"name": "Status Date",
+				"type": "String"
+			},
+			{
+				"name": "Site",
+				"type": "String"
+			},
+			{
+				"name": "Department Name",
+				"type": "String"
+			},
+			{
+				"name": "Current Owner",
+				"type": "String"
+			},
+			{
+				"name": "Payment Status",
+				"type": "String"
+			},
+			{
+				"name": "Last Action",
+				"type": "String"
+			},
+			{
+				"name": "Last Action By",
+				"type": "String"
+			},
+			{
+				"name": "Last Action Date",
+				"type": "String"
+			},
+			{
+				"name": "Contract",
+				"type": "String"
+			},
+			{
+				"name": "Submission Type",
+				"type": "String"
+			},
+			{
+				"name": "Invoice Description",
+				"type": "String"
+			},
+			{
+				"name": "Work Order",
+				"type": "String"
+			},
+			{
+				"name": "AFE/CC",
+				"type": "String"
+			},
+			{
+				"name": "Obj/SUB",
+				"type": "String"
+			},
+			{
+				"name": "Most Recent Comment",
+				"type": "String"
+			},
+			{
+				"name": "Supplier Type",
+				"type": "String"
+			},
+			{
+				"name": "PO",
+				"type": "String"
+			},
+			{
+				"name": "Final Financial Approver",
+				"type": "String"
+			},
+			{
+				"name": "Additional Data 1",
+				"type": "String"
+			},
+			{
+				"name": "Additional Data 2",
+				"type": "String"
+			},
+			{
+				"name": "Resubmitted Date",
+				"type": "String"
+			},
+			{
+				"name": "Load Date",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,20 @@
+{
+	"name": "AzureSql_SalesReportTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure SQL Database Canada",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Purview/Azure SQL DB/Destination"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Purview_SalesReport"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

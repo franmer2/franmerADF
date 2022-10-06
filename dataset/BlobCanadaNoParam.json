@@ -1,0 +1,26 @@
+{
+	"name": "BlobCanadaNoParam",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Blob Canada",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Stored Procedure"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "files",
+				"container": "adftests"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

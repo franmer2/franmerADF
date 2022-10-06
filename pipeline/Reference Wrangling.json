@@ -1,0 +1,50 @@
+{
+	"name": "Reference Wrangling",
+	"properties": {
+		"activities": [
+			{
+				"name": "WranglingDataFlow2",
+				"type": "ExecuteWranglingDataflow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "WranglingDataFlow2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Data": {
+								"DSFileName": {
+									"value": "@pipeline().parameters.FileName",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"queries": []
+				}
+			}
+		],
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Demo/Reference Demo"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-02-24T19:41:20Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

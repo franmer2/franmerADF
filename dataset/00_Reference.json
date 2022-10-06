@@ -1,0 +1,49 @@
+{
+	"name": "00_Reference",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure Storage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Demo/Reference Demo/0_Reference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "CPA - CGI - Règles et mapping DATA - 2020-07-01.csv",
+				"folderPath": "ReferenceDemo/Reference",
+				"container": "adf-demo"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "RUBRIQUE",
+				"type": "String"
+			},
+			{
+				"name": "LIBELLE SAP",
+				"type": "String"
+			},
+			{
+				"name": "DATA",
+				"type": "String"
+			},
+			{
+				"name": "ZONE A/N",
+				"type": "String"
+			},
+			{
+				"name": "EXTRACT",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

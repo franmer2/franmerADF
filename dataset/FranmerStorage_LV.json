@@ -1,0 +1,21 @@
+{
+	"name": "FranmerStorage_LV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FranmerStorage_NorthEurope",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DWMigration/Source"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "demodw"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

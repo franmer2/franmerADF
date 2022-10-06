@@ -1,0 +1,9 @@
+{
+	"name": "ADF-V2-Demo",
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "22d6d6cc-4780-405d-9a4d-d6333fea0675",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}

@@ -1,0 +1,74 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"folder": {
+			"name": "Purview"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Country",
+						"type": "DatasetReference"
+					},
+					"name": "Country"
+				},
+				{
+					"dataset": {
+						"referenceName": "Products",
+						"type": "DatasetReference"
+					},
+					"name": "Products"
+				},
+				{
+					"dataset": {
+						"referenceName": "Customers",
+						"type": "DatasetReference"
+					},
+					"name": "Customers"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSql_Sales",
+						"type": "DatasetReference"
+					},
+					"name": "Sales"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSql_SalesReportTable",
+						"type": "DatasetReference"
+					},
+					"name": "CopyInAzureSQL"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FullName"
+				},
+				{
+					"name": "CustomersAndSales"
+				},
+				{
+					"name": "CustomerAndSalesAndProducts"
+				},
+				{
+					"name": "AllData"
+				},
+				{
+					"name": "Select"
+				},
+				{
+					"name": "SurrogateKey"
+				},
+				{
+					"name": "ChangeColumnOrder"
+				}
+			],
+			"script": "source(output(\n\t\tCountryID as string,\n\t\tCountryName as string,\n\t\tFlag as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Country\nsource(output(\n\t\tProductID as string,\n\t\tProductName as string,\n\t\tImage as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Products\nsource(output(\n\t\tCustomerID as string,\n\t\tNom as string,\n\t\tPrenom as string,\n\t\tNAS as string,\n\t\tPhone as string,\n\t\tCountry as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Customers\nsource(output(\n\t\tSalesID as integer,\n\t\tProductID as integer,\n\t\tCountryID as integer,\n\t\tNb_Sales as integer,\n\t\tObjectif as integer,\n\t\tCustomerID as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Sales\nCustomers derive({Full Name} = concat(Prenom,\" \",Nom)) ~> FullName\nFullName, Sales join(toInteger(Customers@CustomerID) == Sales@CustomerID,\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> CustomersAndSales\nCustomersAndSales, Products join(Sales@ProductID == toInteger(Products@ProductID),\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> CustomerAndSalesAndProducts\nCustomerAndSalesAndProducts, Country join(Sales@CountryID == toInteger(Country@CountryID),\n\tjoinType:'inner',\n\tmatchType:'exact',\n\tignoreSpaces: false,\n\tbroadcast: 'auto')~> AllData\nAllData select(mapColumn(\n\t\tNom,\n\t\tPrenom,\n\t\tNAS,\n\t\tPhone,\n\t\tCountry,\n\t\t{Full Name},\n\t\tNb_Sales,\n\t\tObjectif,\n\t\tProductName,\n\t\tProductImage = Image,\n\t\tCountryName,\n\t\tFlagImage = Flag\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select\nSelect keyGenerate(output(ID as long),\n\tstartAt: 1L,\n\tstepValue: 1L) ~> SurrogateKey\nSurrogateKey select(mapColumn(\n\t\tID,\n\t\tNom,\n\t\tPrenom,\n\t\tNAS,\n\t\tPhone,\n\t\tCountry,\n\t\t{Full Name},\n\t\tNb_Sales,\n\t\tObjectif,\n\t\tProductName,\n\t\tProductImage,\n\t\tCountryName,\n\t\tFlagImage\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> ChangeColumnOrder\nChangeColumnOrder sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> CopyInAzureSQL"
+		}
+	}
+}
