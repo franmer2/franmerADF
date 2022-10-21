@@ -1,0 +1,7 @@
+{
+	"name": "SQLMSFTVM",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "SQLServer VM in MSFT Tenant"
+	}
+}
