@@ -1,0 +1,17 @@
+{
+	"name": "SqlServerMSFTVM_FranmerDemo",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "SQLServer",
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=SQLServer;initial catalog=FranmerDemo;user id=sa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI2ZDczNzhhOS02OWZjLTRkYjAtODE1Yy02NTdhNjJiNThmYTQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SQLMSFTVM",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
