@@ -2,7 +2,9 @@
 	"name": "Azure SQL Database",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"annotations": [],
+		"annotations": [
+			"sqlserverdw.database.windows.net"
+		],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
 			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=sqlserverdw.database.windows.net;initial catalog=PBIRLS_Franmer_Demo;user id=franmer",
